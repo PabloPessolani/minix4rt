@@ -1,0 +1,62 @@
+.\"	@(#)mrt_arqst.2	- Pablo Pessolani - 01/11/05
+.\"
+.TH MRT_ARQST 2 "November 01, 2005"
+.UC 5
+.SH NAME
+mrt_arqst \- sends an Asynchronous request message 
+.SH SYNOPSIS
+.nf
+.ft B
+#include <unistd.h>
+
+int mrt_arqst(mrtpid_t \fImrtpid\fP, Imrt_msg_t \fI*m_ptr\fP);
+.ft R
+.fi
+.SH ARGUMENTS
+.TP
+.I \mrtpid
+The RT-PID of the destination RT-process 
+.TP
+.I \m_ptr
+A pointer to the message buffer 
+.SH DESCRIPTION
+.B mrt_arqst
+sends a request message to a process through a message queue in an Asynchronous manner
+.PP
+It must be executed by a RT-process.
+.SH "RETURN VALUE
+Upon successful completion, a value of 0 (OK) is returned.  Otherwise,
+a negative value is returned to indicate an error.
+.SH ERRORS
+.B mrt_arqst
+will fail if one or more of the following are true:
+.TP 15
+[E_MRT_NORTMODE]
+The system is in Non Real Time processing Mode
+.TP 15
+[E_MRT_BADPTYPE]
+The Source process is not a RT-process
+.TP 15
+[E_MRT_BADPTYPE]
+The Destination process is not a RT-process
+.TP 15
+[E_BAD_DEST]
+The Destination process is does not exist
+.TP 15
+[E_TRY_AGAIN]
+The Destination process message queue is full
+.TP 15
+[E_MRT_NOMQENT]
+The system message queue entry free pool is empty
+.SH "SEE ALSO"
+.BR mrt_rqst(2).
+.BR mrt_uprqst(2).
+.SH AUTHOR
+Pablo A. Pessolani(ppessolani@hotmail.com)
+.SH DIAGNOSTICS
+No diagnostics
+.SH NOTES
+Use at your own risk.
+.SH BUGS
+A lot.
+  

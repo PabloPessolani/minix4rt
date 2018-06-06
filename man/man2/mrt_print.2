@@ -1,0 +1,45 @@
+.\"	@(#)mrt_print.2	- Pablo Pessolani - 01/11/05
+.\"
+.TH MRT_PRINT 2 "November 01, 2005"
+.UC 5
+.SH NAME
+mrt_print \- Prints a specified text on the system console
+.SH SYNOPSIS
+.nf
+.ft B
+#include <unistd.h>
+
+int mrt_print(const char* \fIstring\fP);
+.ft R
+.fi
+.SH ARGUMENTS
+.TP
+.I \string
+The string to print. 
+.SH DESCRIPTION
+.B mrt_print
+Prints a specified text on the system console. 
+The maximun string length accepted is MAXPRTSTR. 
+.PP
+It must be executed by a RT-process.
+.SH "RETURN VALUE
+Upon successful completion, a value of 0 (OK) is returned.  Otherwise,
+a negative value is returned to indicate an error.
+.SH ERRORS
+.B mrt_print
+will fail if one or more of the following are true:
+.TP 15
+[E_MRT_NORTMODE]
+The system is in Non Real Time processing Mode
+.TP 15
+[E_MRT_BADPTYPE]
+The caller process is not a RT-process
+.SH AUTHOR
+Pablo A. Pessolani(ppessolani@hotmail.com)
+.SH DIAGNOSTICS
+No diagnostics
+.SH NOTES
+Use at your own risk.
+.SH BUGS
+A lot.
+  

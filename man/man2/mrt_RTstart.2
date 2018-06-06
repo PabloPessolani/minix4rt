@@ -1,0 +1,52 @@
+.\"	@(#)mrt_RTstart.2	- Pablo Pessolani - 21/10/05
+.\"
+.TH MRT_RTSTART 2 "October 21, 2005"
+.UC 5
+.SH NAME
+mrt_RTstart \- Starts the Real-Time Processing Mode
+.SH SYNOPSIS
+.nf
+.ft B
+#include <unistd.h>
+
+int mrt_RTstart(int \fIHarmonic\fP,int \fIRefresh\fP)
+.ft R
+.fi
+.SH ARGUMENTS
+.TP
+.I \Harmonic
+The Harmonic Number of the MINIX timer frequency (HZ = 50 Hz).
+.I \Refresh
+The idle refresh counter in timer ticks.
+.SH DESCRIPTION
+.B mrt_RTstart
+starts the Real-Time Processing Mode and configure the Timer to generate \fIHarmonic * HZ\fP interrupts by second. The idle process statistics are renewed each \fIRefresh\fP ticks
+.PP
+This call is restricted to the super-user and must be executed by a Non Realtime process.
+.SH "RETURN VALUE
+Upon successful completion, a value of 0 (OK) is returned.  Otherwise,
+a negative value is returned to indicate an error.
+.SH ERRORS
+.B mrt_RTstart
+will fail and processing mode will be unchanged if
+one or more of the following are true:
+.TP 15
+[E_MRT_BADHARM]
+A bad value has been specified for the \fIHarmonic\fP argument.
+.TP 15
+[E_MRT_BADRFSH]
+A bad value has been specified for the \fIRefresh\fP argument.
+.TP 15
+[E_MRT_RTACTIVE]
+The system is already in Real-Time Processing Mode.
+.SH "SEE ALSO"
+.BR mrt_RTstop (2).
+.SH AUTHOR
+Pablo A. Pessolani(ppessolani@hotmail.com)
+.SH DIAGNOSTICS
+No diagnostics
+.SH NOTES
+Use at your own risk.
+.SH BUGS
+A lot.
+  

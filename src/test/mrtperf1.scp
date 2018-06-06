@@ -1,0 +1,9 @@
+#!/bin/sh
+cd /usr/src/test
+./mrtstart -im 20 1000
+./mrtperf1
+./mrtperf1t
+./mrtperf1tp
+./mrtperf1tph
+
+

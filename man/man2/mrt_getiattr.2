@@ -1,0 +1,59 @@
+.\"	@(#)mrt_getiattr.2	- Pablo Pessolani - 01/11/05
+.\"
+.TH MRT_GETIATTR 2 "November 01, 2005"
+.UC 5
+.SH NAME
+mrt_getiattr \- Gets the RT-processing Attributes of an IRQ descriptor.
+.SH SYNOPSIS
+.nf
+.ft B
+#include <unistd.h>
+
+int  mrt_getiattr(\fIint irq, mrt_irqattr_t *attr\fP)
+.ft R
+.fi
+.SH ARGUMENTS
+.TP
+.I \irq
+The IRQ number
+.TP
+.I \attr
+An IRQ Attributes descriptor with the RT-processing for the IRQ that will be filled by the system call.
+.SH DESCRIPTION
+.B mrt_getiattr
+Gets the RT-processing Attributes of an IRQ descriptor.
+On successful return of the system call, the following \fImrt_irqattr_t\fP
+fields will be filled by the system:
+  \fIperiod\fP:  The processing period for a TD- interrupt handler in RT-ticks units.
+  \fItask\fP: The number of the RT-task to send a message for deferred processing.
+  \fIwatchdog\fP: The ID number of a watchdog RT-process.
+  \fIpriority\fP: The priority of the handler
+  \fIirqtype\fP: The type of handler.
+  \fIname\fP: The reference name for the handler.
+.PP
+This call is restricted to the super-user.
+It must be executed by a NRT-process.
+.SH "RETURN VALUE
+Upon successful completion, a value of 0 (OK) is returned.  Otherwise,
+a negative value is returned to indicate an error.
+.SH ERRORS
+.B mrt_getiattr
+will fail if one or more of the following are true:
+.TP 15
+[EINVAL]
+Invalid \fImrt_irqattr_t\fP pointer
+.TP 15
+[E_MRT_BADIRQ]
+Invalid value specified for irq number in \fIirq\fP 
+.TP 15
+.SH "SEE ALSO"
+.BR mrt_setiattr(2).
+.SH AUTHOR
+Pablo A. Pessolani(ppessolani@hotmail.com)
+.SH DIAGNOSTICS
+No diagnostics
+.SH NOTES
+Use at your own risk.
+.SH BUGS
+A lot.
+  

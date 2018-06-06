@@ -1,0 +1,6 @@
+#!/bin/sh
+cd /usr/src/kernel
+while [ 1 ]
+do
+cat *.c 
+done

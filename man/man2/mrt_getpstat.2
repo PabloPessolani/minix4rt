@@ -1,0 +1,51 @@
+.\"	@(#)mrt_getpstat.2	- Pablo Pessolani - 01/11/05
+.\"
+.TH MRT_GETPSTAT 2 "November 01, 2005"
+.UC 5
+.SH NAME
+mrt_getpstat \- Gets the RT-processing statistics of a specified process
+.SH SYNOPSIS
+.nf
+.ft B
+#include <unistd.h>
+
+int mrt_getpstat(\fIpid_t Pid, mrt_pstat_t *p_stats\fP)
+.ft R
+.fi
+.SH ARGUMENTS
+.TP
+.I \Pid
+The PID number of the RT-process 
+.TP
+.I \p_stats
+A pointer to a \fImrt_pstat_t\fP data structure to store RT-process statistics
+.SH DESCRIPTION
+.B mrt_getpstat
+Gets the RT-processing statistics of a specified RT-process
+.PP
+This call is restricted to the super-user.
+It must be executed by a NRT-process.
+.SH "RETURN VALUE
+Upon successful completion, a value of 0 (OK) is returned.  Otherwise,
+a negative value is returned to indicate an error.
+.SH ERRORS
+.B mrt_getpstat
+will fail if one or more of the following are true:
+.TP 15
+[EINVAL]
+Invalid \fImrt_pstat_t\fP pointer
+.TP 15
+[E_BAD_PROC]
+The RT-process of the specified \fIPid\fP does not exist.
+.SH "SEE ALSO"
+.BR mrt_getpint(2).
+.BR mrt_clrpstat(2).
+.SH AUTHOR
+Pablo A. Pessolani(ppessolani@hotmail.com)
+.SH DIAGNOSTICS
+No diagnostics
+.SH NOTES
+Use at your own risk.
+.SH BUGS
+A lot.
+  

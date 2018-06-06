@@ -1,0 +1,45 @@
+.\"	@(#)mrt_RTstop.2	- Pablo Pessolani - 25/10/05
+.\"
+.TH MRT_RTSTOP 2 "October 25, 2005"
+.UC 5
+.SH NAME
+mrt_RTstop \- Stops the Real-Time processing mode
+.SH SYNOPSIS
+.nf
+.ft B
+#include <unistd.h>
+
+int mrt_RTstop( void )
+.ft R
+.fi
+.SH ARGUMENTS
+.TP
+.I \None
+No Arguments.
+.SH DESCRIPTION
+.B mrt_RTstop
+Stops the Real-Time Processing Mode. 
+.PP
+This call is restricted to the super-user and must be executed by a Non Realtime process.
+.SH "RETURN VALUE
+Upon successful completion, a value of 0 (OK) is returned.  Otherwise,
+a negative value is returned to indicate an error.
+.SH ERRORS
+.B mrt_RTstop
+will fail and processing mode will be unchanged if
+the following is true:
+.TP 15
+[E_MRT_RTACTIVE]
+A Real-Time process is still running. 
+.TP 15
+.SH "SEE ALSO"
+.BR mrt_RTstart (2).
+.SH AUTHOR
+Pablo A. Pessolani(ppessolani@hotmail.com)
+.SH DIAGNOSTICS
+No diagnostics
+.SH NOTES
+Kill all RT-process before call \fImrt_RTstop\fP.
+.SH BUGS
+A lot.
+  

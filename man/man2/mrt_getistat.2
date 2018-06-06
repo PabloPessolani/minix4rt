@@ -1,0 +1,59 @@
+.\"	@(#)mrt_getistat.2	- Pablo Pessolani - 01/11/05
+.\"
+.TH MRT_GETISTAT 2 "November 01, 2005"
+.UC 5
+.SH NAME
+mrt_getistat \- Gets the RT-processing Statistics of an IRQ descriptor.
+.SH SYNOPSIS
+.nf
+.ft B
+#include <unistd.h>
+
+int  mrt_getistat(\fIint irq, mrt_irqstat_t *stat\fP)
+.ft R
+.fi
+.SH ARGUMENTS
+.TP
+.I \irq
+The IRQ number
+.TP
+.I \sstat
+An IRQ statistics descriptor with the RT-processing statistics of the specified IRQ 
+descriptor will be filled by the system.
+.SH DESCRIPTION
+.B mrt_getistat
+Gets the RT-processing Statistics of an IRQ descriptor.
+On successful return of the system call, the following \fImrt_irqstat_t\fP
+fields will be filled by the system:
+  \fIcount\fP:  An interrupt counter.
+  \fImaxshower\fP:  The maximun number of interrupts into a period of Timer Driven handler.
+  \fImdl\fP:  The number of Missed DeadLines of the handler.
+  \fItimestamp\fP: The last interrupt timestamp.
+  \fImaxlat\fP: The maximun (approximate) latency of the handler.
+.PP
+This call is restricted to the super-user.
+It must be executed by a NRT-process.
+.SH "RETURN VALUE
+Upon successful completion, a value of 0 (OK) is returned.  Otherwise,
+a negative value is returned to indicate an error.
+.SH ERRORS
+.B mrt_getistat
+will fail if one or more of the following are true:
+.TP 15
+[EINVAL]
+Invalid \fImrt_irqstat_t\fP pointer
+.TP 15
+[E_MRT_BADIRQ]
+Invalid specified \fIirq\fP number
+.TP 15
+.SH "SEE ALSO"
+.BR mrt_getiattr(2).
+.SH AUTHOR
+Pablo A. Pessolani(ppessolani@hotmail.com)
+.SH DIAGNOSTICS
+No diagnostics
+.SH NOTES
+Use at your own risk.
+.SH BUGS
+A lot.
+  

@@ -1,0 +1,2714 @@
+
+
+                                                                              
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              
+
+
+
+MRTRTSTART(2)            Minix Programmer's Manual             MRTRTSTART(2)
+
+
+NAME
+     mrtRTstart - Starts the Real-Time Processing Mode
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtRTstart(int Harmonic,int Refresh)
+
+ARGUMENTS
+
+     Harmonic
+          The Harmonic Number of the MINIX  timer  frequency  (HZ  =  50  Hz).
+          Refresh The idle refresh counter in timer ticks.
+
+DESCRIPTION
+     mrtRTstart starts the Real-Time Processing Mode and configure the  Timer
+     to  generate  Harmonic  *  HZ  interrupts  by  second.  The  idle process
+     statistics are renewed each Refresh ticks
+
+     This call is restricted to the super-user and must be executed by  a  Non
+     Realtime process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtRTstart will fail and processing mode will be  unchanged  if  one  or
+     more of the following are true:
+
+     [EMRTBADHARM]
+                    A bad value has been specified for the Harmonic argument.
+
+     [EMRTBADRFSH]
+                    A bad value has been specified for the Refresh argument.
+
+     [EMRTRTACTIVE]
+                    The system is already in Real-Time Processing Mode.
+
+SEE ALLLSO
+     mrtRTstop(2).
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+
+
+
+
+5BSD                            October 21, 2005                             1
+
+
+
+MRTRTSTART(2)            Minix Programmer's Manual             MRTRTSTART(2)
+
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            October 21, 2005                             2
+
+
+
+MRTRTSTOP(2)             Minix Programmer's Manual              MRTRTSTOP(2)
+
+
+NAME
+     mrtRTstop - Stops the Real-Time processing mode
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtRTstop( vvvoid )
+
+ARGUMENTS
+
+     None No Arguments.
+
+DESCRIPTION
+     mrtRTstop Stops the Real-Time Processing Mode.
+
+     This call is restricted to the super-user and must be executed by  a  Non
+     Realtime process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtRTstop will fail  and  processing  mode  will  be  unchanged  if  the
+     following is true:
+
+     [EMRTRTACTIVE]
+                    A Real-Time process is still running.
+
+SEE ALLLSO
+     mrtRTstart(2).
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Kill all RT-process before call mrt_RTstop.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+5BSD                            October 25, 2005                             1
+
+
+
+MRTARQST(2)              Minix Programmer's Manual               MRTARQST(2)
+
+
+NAME
+     mrtarqst - sends an Asynchronous request message
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtarqst(mrtpidt mrtpid, Imrtmsgt *m_ptr);
+
+ARGUMENTS
+
+     mrtpid
+          The RT-PID of the destination RT-process
+
+     m_ptr
+          A pointer to the message buffer
+
+DESCRIPTION
+     mrtarqst sends a request message to a process through a message queue in
+     an Asynchronous manner
+
+     It must be executed by a RT-process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtarqst will fail if one or more of the following are true:
+
+     [EMRTNORTMODE]
+                    The system is in Non Real Time processing Mode
+
+     [EMRTBADPTYPE]
+                    The Source process is not a RT-process
+
+     [EMRTBADPTYPE]
+                    The Destination process is not a RT-process
+
+     [EBADDEST]   The Destination process is does not exist
+
+     [ETRYAGAIN]  The Destination process message queue is full
+
+     [EMRTNOMQENT]
+                    The system message queue entry free pool is empty
+
+SEE ALLLSO
+     mrtrqst(2)...  mrtuprqst(2)...
+
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTARQST(2)              Minix Programmer's Manual               MRTARQST(2)
+
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            2
+
+
+
+MRTCLRPSTAT(2)           Minix Programmer's Manual            MRTCLRPSTAT(2)
+
+
+NAME
+     mrtclrpstat - Clears all RT-processing statistics of a specified process
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtclrpstat(pid_t Pid)
+
+ARGUMENTS
+
+     Pid  The PID number of the RT-process
+
+DESCRIPTION
+     mrtclrpstat Clears all RT-processing statistics of a specified process
+
+     This call is restricted to the super-user.  It must be executed by a NRT-
+     process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtclrpstat will fail if one or more of the following are true:
+
+     [EBADPROC]   The RT-process of the specified Pid does not exist.
+
+SEE ALLLSO
+     mrtgetpstat(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTGETIATTR(2)           Minix Programmer's Manual            MRTGETIATTR(2)
+
+
+NAME
+     mrtgetiattr - Gets the RT-processing Attributes of an IRQ descriptor.
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int  mrtgetiattr(int irq, mrt_irqattr_t *attr)
+
+ARGUMENTS
+
+     irq  The IRQ number
+
+     attr An IRQ Attributes descriptor with the RT-processing for the IRQ that
+          will be filled by the system call.
+
+DESCRIPTION
+     mrtgetiattr Gets the RT-processing Attributes of an IRQ descriptor.   On
+     successful  return of the system call, the following mrt_irqattr_t fields
+     will be filled by the system:
+       period:  The processing period for a TD- interrupt handler in  RT-ticks
+     units.
+       task: The number  of  the  RT-task  to  send  a  message  for  deferred
+     processing.
+       watchdog: The ID number of a watchdog RT-process.
+       priority: The priority of the handler
+       irqtype: The type of handler.
+       name: The reference name for the handler.
+
+     This call is restricted to the super-user.  It must be executed by a NRT-
+     process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtgetiattr will fail if one or more of the following are true:
+
+     [EINVAL]       Invalid mrt_irqattr_t pointer
+
+     [EMRTBADIRQ] Invalid value specified for irq number in irq
+
+SEE ALLLSO
+     mrtsetiattr(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTGETIATTR(2)           Minix Programmer's Manual            MRTGETIATTR(2)
+
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            2
+
+
+
+MRTGETIINT(2)            Minix Programmer's Manual             MRTGETIINT(2)
+
+
+NAME
+     mrtgetiint - Gets the RT-processing Internal use fields values of an IRQ
+     descriptor.
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int  mrtgetiint(int irq, mrt_irq_int_t *stat)
+
+ARGUMENTS
+
+     irq  The IRQ number
+
+     iint An IRQ internal fields descriptor with  the  RT-processing  internal
+          fields  values of the specified IRQ descriptor will be filled by the
+          system.
+
+DESCRIPTION
+     mrtgetiint Gets the RT-processing Internal use fields values of  an  IRQ
+     descriptor.   On  successful  return  of  the  system call, the following
+     mrt_irq_int_t fields will be filled by the system:
+        irq:  The number of the irq.
+       Harmonic:  The value  of  the  RT_sv.Harmonic  system  value  when  the
+     systems  change  to  Real  Time  mode.  (only  for Real Time Timer Driven
+     descriptors)
+       vimer:  The number of the Virtual Timer used for Real Time Timer Driven
+     descriptors
+       flags:  Some status flags
+
+     This call is restricted to the super-user.  It must be executed by a NRT-
+     process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtgetiint will fail if one or more of the following are true:
+
+     [EINVAL]       Invalid mrt_irq_int_t pointer
+
+     [EMRTBADIRQ] Invalid value specified for irq number in irq
+
+SEE ALLLSO
+     mrtgetiarg(2)...
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTGETIINT(2)            Minix Programmer's Manual             MRTGETIINT(2)
+
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            2
+
+
+
+MRTGETISTAT(2)           Minix Programmer's Manual            MRTGETISTAT(2)
+
+
+NAME
+     mrtgetistat - Gets the RT-processing Statistics of an IRQ descriptor.
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int  mrtgetistat(int irq, mrt_irqstat_t *stat)
+
+ARGUMENTS
+
+     irq  The IRQ number
+
+     stat An IRQ statistics descriptor with the  RT-processing  statistics  of
+          the specified IRQ descriptor will be filled by the system.
+
+DESCRIPTION
+     mrtgetistat Gets the RT-processing Statistics of an IRQ descriptor.   On
+     successful  return of the system call, the following mrt_irqstat_t fields
+     will be filled by the system:
+       count:  An interrupt counter.
+       maxshower:  The maximun number of interrupts into  a  period  of  Timer
+     Driven handler.
+       mdl:  The number of Missed DeadLines of the handler.
+       timestamp: The last interrupt timestamp.
+       maxlat: The maximun (approximate) latency of the handler.
+
+     This call is restricted to the super-user.  It must be executed by a NRT-
+     process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtgetistat will fail if one or more of the following are true:
+
+     [EINVAL]       Invalid mrt_irqstat_t pointer
+
+     [EMRTBADIRQ] Invalid specified irq number
+
+SEE ALLLSO
+     mrtgetiattr(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTGETISTAT(2)           Minix Programmer's Manual            MRTGETISTAT(2)
+
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            2
+
+
+
+MRTGETPATTR(2)           Minix Programmer's Manual            MRTGETPATTR(2)
+
+
+NAME
+     mrtgetpattr - Gets the RT-processing attributtes  of  the  calling  NRT-
+     Process
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtgetpattr(pid_t Pid, mrt_pattr_t *P_attrib)
+
+ARGUMENTS
+
+     Pid  The PID number of the RT-process
+
+     P_attrib
+          A pointer to a mrt_pattr_t data structure to store the process's RT-
+          processing attributes
+
+DESCRIPTION
+     mrtgetpattr Gets the RT-Processing Attributes of the specified process
+
+     This call is restricted to the super-user.  It must be executed by a NRT-
+     process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtgetpattr will fail if one or more of the following are true:
+
+     [EINVAL]       Invalid mrt_pattr_t pointer
+
+SEE ALLLSO
+     mrtsetpattr(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTGETPINT(2)            Minix Programmer's Manual             MRTGETPINT(2)
+
+
+NAME
+     mrtgetpint - Gets the RT-processing internal variables  of  a  specified
+     process
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtgetpint(pid_t Pid, mrt_pint_t *p_int)
+
+ARGUMENTS
+
+     Pid  The PID number of the RT-process
+
+     p_int
+          A pointer  to  a  mrt_pint_t  data  structure  to  store  RT-process
+          internal variables
+
+DESCRIPTION
+     mrtgetpint Gets the RT-processing  internal  variables  of  a  specified
+     process
+
+     This call is restricted to the super-user.  It must be executed by a NRT-
+     process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtgetpint will fail if one or more of the following are true:
+
+     [EINVAL]       Invalid mrt_pint_t pointer
+
+     [EBADPROC]   The RT-process of the specified Pid does not exist.
+
+SEE ALLLSO
+     mrtgetpstat(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTGETPINT(2)            Minix Programmer's Manual             MRTGETPINT(2)
+
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            2
+
+
+
+MRTGETPSTAT(2)           Minix Programmer's Manual            MRTGETPSTAT(2)
+
+
+NAME
+     mrtgetpstat - Gets the RT-processing statistics of a specified process
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtgetpstat(pid_t Pid, mrt_pstat_t *p_stats)
+
+ARGUMENTS
+
+     Pid  The PID number of the RT-process
+
+     p_stats
+          A pointer to  a  mrt_pstat_t  data  structure  to  store  RT-process
+          statistics
+
+DESCRIPTION
+     mrtgetpstat Gets the RT-processing statistics of a specified RT-process
+
+     This call is restricted to the super-user.  It must be executed by a NRT-
+     process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtgetpstat will fail if one or more of the following are true:
+
+     [EINVAL]       Invalid mrt_pstat_t pointer
+
+     [EBADPROC]   The RT-process of the specified Pid does not exist.
+
+SEE ALLLSO
+     mrtgetpint(2)...  mrtclrpstat(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTGETSSTAT(2)           Minix Programmer's Manual            MRTGETSSTAT(2)
+
+
+NAME
+     mrtgetsstat - Gets the System Wide RT-processing statistics
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtgetsstat(mrt_sysstat_t *stat)
+
+ARGUMENTS
+
+     stat A pointer to a mrt_sysstat_t data structure to store the system  RT-
+          processing statistics
+
+DESCRIPTION
+     mrtgetsstat Gets the System Wide RT-processing statistics
+
+     This call is restricted to the super-user.  It must be executed by a NRT-
+     process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtgetsstat will fail if one or more of the following are true:
+
+     [EINVAL]       Invalid mrt_sysstat_t pointer
+
+SEE ALLLSO
+     mrtgetsvvval(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTGETSVAL(2)            Minix Programmer's Manual             MRTGETSVAL(2)
+
+
+NAME
+     mrtgetsval - Gets the System Wide RT-processing values
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtgetsvvval(mrt_sysval_t *val)
+
+ARGUMENTS
+
+     val  A pointer to a mrt_sysval_t data structure to store the  system  RT-
+          processing statistics
+
+DESCRIPTION
+     mrtgetsvvval Gets the System Wide RT-processing values.
+
+     This call is restricted to the super-user.  It must be executed by a NRT-
+     process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtgetsvvval will fail if one or more of the following are true:
+
+     [EINVAL]       Invalid mrt_sysval_t pointer
+
+SEE ALLLSO
+     mrtgetsstat(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTPRINT(2)              Minix Programmer's Manual               MRTPRINT(2)
+
+
+NAME
+     mrtprint - Prints a specified text on the system console
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtprint(const char*** string);
+
+ARGUMENTS
+
+     tring
+          The string to print.
+
+DESCRIPTION
+     mrtprint Prints a specified text on  the  system  console.  The  maximun
+     string length accepted is MAXPRTSTR.
+
+     It must be executed by a RT-process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtprint will fail if one or more of the following are true:
+
+     [EMRTNORTMODE]
+                    The system is in Non Real Time processing Mode
+
+     [EMRTBADPTYPE]
+                    The caller process is not a RT-process
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTRCV(2)                Minix Programmer's Manual                 MRTRCV(2)
+
+
+NAME
+     mrtrcv - Gets a message from the RT-process MQ
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtrcvvv(mrtpidt mrtpid, mrt_msg_t *m_ptr,
+                     m_hdr_t *hdr_ptr, lcounter_t timeout);
+
+ARGUMENTS
+
+     mrtpid
+          The RT-PID of the message sender from  which  the  caller  wants  to
+          receive  a  message. A special value of MRTANYPROC can be specified
+          to receive a message from any source.
+
+     m_ptr
+          The caller's buffer for the message payload.
+
+     \hdr_ptr
+          The caller’s buffer for the message header.
+
+     timeout
+          The  number  of  RT-ticks  for  waiting  to  receive  a  message.  A
+          MRTNOWAIT value can be specified to return with o without receiving
+          the message. If the message has been received, the  function  return
+          code  is  OK  else  returns ETRYAGAIN.  A MRTFOREVER value can be
+          specified to waits until the message is receive.
+
+DESCRIPTION
+     mrtrcvvv Gets a message from the RT-process MQ
+
+     It must be executed by a RT-process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtrcvvv will fail if one or more of the following are true:
+
+     [EMRTNORTMODE]
+                    The system is in Non Real Time processing Mode
+
+     [EMRTBADPTYPE]
+                    The Source process is not a RT-process  [ETRYAGAIN]  The
+                    process  has  specified a MRTNOWAIT timeout and the MQ is
+                    empty or there are not  any  message  from  the  specified
+                    source.    [MRTNOVTIMER]  The  process  has  specified  a
+                    timeout to wait for  a  message  but  there  are  not  any
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTRCV(2)                Minix Programmer's Manual                 MRTRCV(2)
+
+
+                    Virtual Timer to allocate.
+
+SEE ALLLSO
+     mrtrqst(2)...  mrtrplyyy(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            2
+
+
+
+MRTREPLY(2)              Minix Programmer's Manual               MRTREPLY(2)
+
+
+NAME
+     mrtreply - sends a message to a process through a MQ in an  asynchronous
+     manner
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtreplyyy(mrtpidt mrtpid, Imrtmsgt *m_ptr);
+
+ARGUMENTS
+
+     mrtpid
+          The RT-PID of the destination RT-process
+
+     m_ptr
+          A pointer to the message buffer
+
+DESCRIPTION
+     mrtreplyyy sends a message to a process through a MQ  in  an  asynchronous
+     manner
+
+     It must be executed by a RT-process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtreplyyy will fail if one or more of the following are true:
+
+     [EMRTNORTMODE]
+                    The system is in Non Real Time processing Mode
+
+     [EMRTBADPTYPE]
+                    The Source process is not a RT-process
+
+     [EMRTBADPTYPE]
+                    The Destination process is not a RT-process
+
+     [EBADDEST]   The Destination process is does not exist
+
+     [ETRYAGAIN]  The Destination process message queue is full
+
+     [EMRTNOMQENT]
+                    The system message queue entry free pool is empty
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTREPLY(2)              Minix Programmer's Manual               MRTREPLY(2)
+
+
+SEE ALLLSO
+     mrtarqst(2)...  mrtuprqst(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            2
+
+
+
+MRTRESTART(2)            Minix Programmer's Manual             MRTRESTART(2)
+
+
+NAME
+     mrtrestart - Restart the Real-Time Processing Mode
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtrestart(int Harmonic,int Refresh)
+
+ARGUMENTS
+
+     Harmonic
+          The Harmonic Number of the MINIX  timer  frequency  (HZ  =  50  Hz).
+          Refresh The idle refresh counter in timer ticks.
+
+DESCRIPTION
+     mrtrestart Restarts the Real-Time  Processing  Mode  and  configure  the
+     Timer  to  generate  Harmonic  * HZ interrupts by second.The idle process
+     statistics are renewed each Refresh ticks.
+
+     This call is restricted to the super-user and must be executed by  a  Non
+     Realtime process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtrestart will fail and processing mode will be  unchanged  if  one  or
+     more of the following are true:
+
+     [EMRTBADHARM]
+                    A bad value has been specified for the Harmonic argument.
+
+     [EMRTBADRFSH]
+                    A bad value has been specified for the Refresh argument.
+
+     [EMRTRTACTIVE]
+                    At least a RT-process is running in the system
+
+SEE ALLLSO
+     mrtRTstart(2)...  mrtRTstop(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+
+
+
+
+5BSD                            October 21, 2005                             1
+
+
+
+MRTRESTART(2)            Minix Programmer's Manual             MRTRESTART(2)
+
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            October 21, 2005                             2
+
+
+
+MRTRQRCV(2)              Minix Programmer's Manual               MRTRQRCV(2)
+
+
+NAME
+     mrtrqrc - sends a synchronous request message and waits to  receive  the
+     reply
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtrqrcvvv(mrtpidt mrtpid, mrtmsgt *rqst_ptr
+                     ,mrtmsgt *rply_ptr,  mrthdrt *hdr_rply
+                     ,lcountert timeout);
+
+ARGUMENTS
+
+     mrtpid
+          The RT-PID of the destination RT-process
+
+     rqst_ptr
+          A pointer to the request message buffer
+
+     rply_ptr
+          A pointer to the reply  message buffer
+
+     hdr_rply
+          A pointer to the reply message header buffer
+
+     timeout
+          The number of RT-ticks for waiting to send de  request  and  receive
+          the  reply.  A  MRTNOWAIT  value can be specified to return without
+          waiting if the destination process is not waiting for this  message.
+          A  MRTFOREVER  value can be specified to wait until the destination
+          process receive the message.
+
+DESCRIPTION
+     mrtrqrplyyy sends a request message to a process through a  message  queue
+     in  a  synchronous  manner  and  waits  for  the  reply  with  or without
+     specifying a timeout.
+
+     It must be executed by a RT-process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtrqst will fail if one or more of the following are true:
+
+     [EMRTNORTMODE]
+                    The system is in Non Real Time processing Mode
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTRQRCV(2)              Minix Programmer's Manual               MRTRQRCV(2)
+
+
+     [EMRTBADPROC]
+                    The process PID does not much with the process number  use
+                    by the kernel
+
+     [EMRTBADPTYPE]
+                    The Destination/Source process is not a RT-process
+
+     [EBADDEST]   The Destination/Source process is does not exist
+
+     [ETRYAGAIN]  The Destination/Source process message queue is full
+
+     [EMRTNOMQENT]
+                    The system message queue entry free pool is empty
+
+SEE ALLLSO
+     mrtrqst(2)...  mrtrcvvv(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            2
+
+
+
+MRTRQST(2)               Minix Programmer's Manual                MRTRQST(2)
+
+
+NAME
+     mrtrqst - sends a synchronous request message
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtrqst(mrtpidt mrtpid, Imrtmsgt *m_ptr, lcountert timeout);
+
+ARGUMENTS
+
+     mrtpid
+          The RT-PID of the destination RT-process
+
+     m_ptr
+          A pointer to the message buffer
+
+     timeout
+          The number of RT-ticks for waiting to send de request. A  MRTNOWAIT
+          value  can be specified to return without waiting if the destination
+          process is not waiting for this message.  A MRTFOREVER value can be
+          specified to wait until the destination process receive the message.
+
+DESCRIPTION
+     mrtrqst sends a request message to a process through a message queue  in
+     a synchronous manner with or without specifying a timeout.
+
+     It must be executed by a RT-process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtrqst will fail if one or more of the following are true:
+
+     [EMRTNORTMODE]
+                    The system is in Non Real Time processing Mode
+
+     [EMRTBADPROC]
+                    The process PID does not much with the process number  use
+                    by the kernel
+
+     [EMRTBADPTYPE]
+                    The Destination process is not a RT-process
+
+     [EBADDEST]   The Destination process is does not exist
+
+     [ETRYAGAIN]  The Destination process message queue is full
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTRQST(2)               Minix Programmer's Manual                MRTRQST(2)
+
+
+     [EMRTNOMQENT]
+                    The system message queue entry free pool is empty
+
+SEE ALLLSO
+     mrtarqst(2)...  mrtuprqst(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            2
+
+
+
+MRTSEMALLOC(2)           Minix Programmer's Manual            MRTSEMALLOC(2)
+
+
+NAME
+     mrtsemalloc - Allocates a RT-semaphore
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtsemalloc(mrt_semattr_t *sattr)
+
+ARGUMENTS
+
+     attr A pointer to a mrt_semattr_t data structure  with  the  RT-semaphore
+          attributes. The field of the data structure are:
+                  value: Initial Value for the RT-semaphore
+                  flags: Status and Policy Flags
+                  priority: Ceiling Priority (not used yet)
+                  name: An identification name for the RT-semaphore
+
+          The Real Time Flags flags can be and or of some of the following:
+                  SEMPRTYORDER: Priority Order Policy
+                  SEMPRTYINHERIT: Priority Inheritance policy
+                  SEMMUTEX: Mutual Exclusion (Binary) Semaphore
+
+          The SEMPRTYINHERIT flag needs the SEMPRTYORDER and SEMMUTEX flags
+          set.
+
+
+DESCRIPTION
+     mrtsemalloc Allocate a RT-Sempahore to the calling NRT-process.
+
+     This call is restricted to the super-user.  It must be executed by a NRT-
+     process in System Real Time Processing Mode.
+
+RETURN VALLLUE
+     Upon successful completion,  if  a  value  grater  or  equal  than  0  is
+     returned,  there is the Semaphore ID used in future semaphore operations.
+     Otherwise, a negative value is returned to indicate an error.
+
+ERRORS
+     mrtsemalloc will fail if one or more of the following are true:
+
+     [EMRTBADVALUE]
+                    Invalid Initial Value for a MUTEX RT-semaphore
+
+     [EMRTBADNAME]
+                    The specified name of the RT-semaphore is  used  by  other
+                    allocated RT-semaphore.
+
+     [EMRTBADPRTY]
+                    Invalid value specified for RT-semaphore ceiling priority.
+
+
+
+5BSD                              July 11, 2006                              1
+
+
+
+MRTSEMALLOC(2)           Minix Programmer's Manual            MRTSEMALLOC(2)
+
+
+     [EMRTBADFLAGS]
+                    There is an error in  the  specified  RT-semaphore  policy
+                    flags.
+
+     [EMRTNOSEM]  There aren't any free RT-Semaphore in the system.
+
+SEE ALLLSO
+     mrtsemfree(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                              July 11, 2006                              2
+
+
+
+MRTSETIATTR(2)           Minix Programmer's Manual            MRTSETIATTR(2)
+
+
+NAME
+     mrtsetiattr - Sets the RT-processing Attributes of an IRQ descriptor.
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int  mrtsetiattr(int irq, mrt_irqattr_t *attr)
+
+ARGUMENTS
+
+     irq  The IRQ number
+
+     attr An IRQ Attributes descriptor with the RT-processing  Attributes  for
+          the IRQ.
+
+DESCRIPTION
+     mrtsetiattr Sets the RT-processing Attributes of an IRQ descriptor.  The
+     mrt_irqattr_t  data  structure  has  the  following  fields  that must be
+     filled:
+       period:  The processing period for a TD- interrupt handler in  RT-ticks
+     units.
+       task: The ID number of the RT-task  to  send  a  message  for  deferred
+     processing.
+       watchdog: The ID number of a watchdog RT-process.
+       priority: The priority of the handler
+       irqtype: The type of handler. It must an OR of the following bits:
+             MRT_RTIRQ: for Real-Time handlers  (Otherwise  it  will  be  NRT-
+     handler).
+             MRT_TDIRQ: for Timer-Driven handlers (Otherwise it will be  Event
+     Driven-IRQ handler).
+             MRT_SOFTIRQ: for Software IRQ handlers (Otherwise it  will  be  a
+     Hardware IRQ handler).
+       name: A reference name for the handler.
+
+     This call is restricted to the super-user.  It must be executed by a NRT-
+     process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtsetiattr will fail if one or more of the following are true:
+
+     [EINVAL]       Invalid mrt_irqattr_t pointer
+
+     [EMRTBADIRQ] Invalid value specified for irq number in irq in attr
+
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTSETIATTR(2)           Minix Programmer's Manual            MRTSETIATTR(2)
+
+
+     [EMRTBADTASK]
+                    Invalid value specified for the TASK number in attr->task
+
+     [EMRTBADWDOG]
+                    Invalid value specified for  the  watchdog  PID  in  attr-
+                    >watchdog
+
+     [EMRTBADPRTY]
+                    Invalid value specified for the IRQ descriptor priority in
+                    attr->priority
+
+     [EMRTBADIRQT]
+                    Invalid value specified for the IRQ type in attr->irqtype
+
+SEE ALLLSO
+     mrtgetiattr(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            2
+
+
+
+MRTSETPATTR(2)           Minix Programmer's Manual            MRTSETPATTR(2)
+
+
+NAME
+     mrtsetpattr - Sets the RT-processing attributtes  of  the  calling  NRT-
+     Process
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtsetpattr(mrt_pattr_t *p_attrib)
+
+ARGUMENTS
+
+     p_attrib
+          A pointer to a mrt_pattr_t data  structure  with  the  RT-processing
+          attributes  of  the  calling  NRT-process.  The  field  of  the data
+          structure are:
+                  flags: Real Time Flags
+                  baseprty: Real Time Base priority
+                  period: period in RT-ticks for Periodic Processes
+                  limit: maximun number of process schedulings
+                  deadline: process deadline
+                  watchdog: Watchdog process
+                  mq_size: Message Queue Size
+                  mq_flags: Message Queue Policy Flags
+
+          The Real Time Flags flags can be an OR of the following flags:
+                  MRTPREALTIME: to set the process as Real-Time
+                  MRTPPERIODIC: to set the process as Real-Time Periodic
+
+          The Message Queue  Policy  Flags  mq_flags  can  be  an  OR  of  the
+          following flags:
+                  MRTPRTYORDER: Priority Order Policy (otherwise FIFO policy)
+                  MRTPRTYINHERIT: Priority Inheritance policy
+
+DESCRIPTION
+     mrtsetpattr Sets the RT-Processing Attributes of the calling NRT-process
+
+     This call is restricted to the super-user.  It must be executed by a NRT-
+     process in System Real Time Processing Mode.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtsetpattr will fail if one or more of the following are true:
+
+     [EINVAL]       Invalid mrt_pattr_t pointer
+
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTSETPATTR(2)           Minix Programmer's Manual            MRTSETPATTR(2)
+
+
+     [EMRTBADPTYPE]
+                    Invalid value specified  for  process  type  in  P_attrib-
+                    >ptype
+
+     [EMRTBADPRTY]
+                    Invalid value specified for process priority in  P_attrib-
+                    >priority
+
+     [EMRTBADWDOG]
+                    Non  existing  or  NRT-watchdog   process   specified   in
+                    P_attrib->watchdog
+
+     [EMRTNOMSGQ] The system cannot assign a Message Queue of the  specified
+                    size inP_attrib->mq_size
+
+     [EMRTNOVTIMER]
+                    The system cannot assign a Virtual Timer  for  a  Periodic
+                    RT-process
+
+SEE ALLLSO
+     mrtgetpattr(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            2
+
+
+
+MRTSETSVAL(2)            Minix Programmer's Manual             MRTSETSVAL(2)
+
+
+NAME
+     mrtsetsval - Changes system behaviour setting some flags
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtsetsvvval(unsigned int Flags)
+
+ARGUMENTS
+
+     Flags
+          An  integer that is an OR of processing mode flags
+
+DESCRIPTION
+     mrtsetsvvval Changes system behaviour setting some flags
+
+     This call is restricted to the super-user and must be executed by  a  Non
+     Realtime process in Non Realtime Mode.  The Flags to set could be:
+
+     [MRTDBG232]   To allow printf232() function usage.
+
+     [MRTLATENCY]  To allow interrupt handler latency computation.
+
+     [MRTBPIP]     To  enable  the  usage  of  Basic   Priority   Inheritance
+                    Protocol.
+
+     [MRTONESHOT]  To set the One Shot Timer programming mode.
+
+     [MRTPRTYMASK] To enable to change the PIC Mask according to  the  system
+                    priority level of execution.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtsetsvvval will fail and processing mode flags will be unchanged if  the
+     following is true:
+
+     [EMRTRTMODE] The system is executing in Realtime Mode
+
+SEE ALLLSO
+     mrtRTstart(2).
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+
+
+
+
+
+5BSD                               19 May, 2005                              1
+
+
+
+MRTSETSVAL(2)            Minix Programmer's Manual             MRTSETSVAL(2)
+
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                               19 May, 2005                              2
+
+
+
+MRTSIGN(2)               Minix Programmer's Manual                MRTSIGN(2)
+
+
+NAME
+     mrtsign - sends a message to a process through a MQ in  an  asynchronous
+     manner.
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtsign(mrtpidt mrtpid, Imrtmsgt *m_ptr);
+
+ARGUMENTS
+
+     mrtpid
+          The RT-PID of the destination RT-process
+
+     m_ptr
+          A pointer to the message buffer
+
+     priority
+          message priority
+
+DESCRIPTION
+     mrtsign sends a request message to a process through a message queue  in
+     an Asynchronous manner in a botton-up way.
+
+     It must be executed by a RT-process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtsign will fail if one or more of the following are true:
+
+     [EMRTNORTMODE]
+                    The system is in Non Real Time processing Mode
+
+     [EMRTBADPTYPE]
+                    The Source process is not a RT-process
+
+     [EMRTBADPTYPE]
+                    The Destination process is not a RT-process
+
+     [EBADDEST]   The Destination process is does not exist
+
+     [ETRYAGAIN]  The Destination process message queue is full
+
+     [EMRTNOMQENT]
+                    The system message queue entry free pool is empty
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTSIGN(2)               Minix Programmer's Manual                MRTSIGN(2)
+
+
+SEE ALLLSO
+     mrtrqst(2)...  mrtarqst(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            2
+
+
+
+MRTSLEEP(2)              Minix Programmer's Manual               MRTSLEEP(2)
+
+
+NAME
+     mrtsleep - Blocks a process for a specified time.
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtsleep(lcountert time);
+
+ARGUMENTS
+
+     time The process is blocked  for  a  specified  time  (in  RT-ticks).   A
+          MRTFOREVER  value  can  be specified for the time to wait until the
+          process will be unblocked by  other  process  using  the  mrtwakeup
+          System Call
+
+DESCRIPTION
+     mrtsleep Blocks a process for a specified time.
+
+     It must be executed by a RT-process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtsleep will fail if one or more of the following are true:
+
+     [EMRTNORTMODE]
+                    The system is in Non Real Time processing Mode
+
+     [EMRTBADPER] The  process  has  specified  an  invalid  time  argument.
+                    [MRTNOVTIMER]  The  process  has specified a time to wait
+                    but there are not any Virtual Timer to allocate.
+
+SEE ALLLSO
+     mrtWakeup(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTSLEEP(2)              Minix Programmer's Manual               MRTSLEEP(2)
+
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            2
+
+
+
+MRTUPRQST(2)             Minix Programmer's Manual              MRTUPRQST(2)
+
+
+NAME
+     mrtuprqst - sends an Asynchronous request message in a botton-up way.
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtuprqst(mrtpidt mrtpid, Imrtmsgt *m_ptr, Iint priority);
+
+ARGUMENTS
+
+     mrtpid
+          The RT-PID of the destination RT-process
+
+     m_ptr
+          A pointer to the message buffer
+
+     priority
+          message priority
+
+DESCRIPTION
+     mrtuprqst sends a request message to a process through a  message  queue
+     in  an  Asynchronous  manner  in a botton-up way. The destination process
+     increase its priority if the priority argument is higher that the one  it
+     owns.
+
+     It must be executed by a RT-process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtuprqst will fail if one or more of the following are true:
+
+     [EMRTNORTMODE]
+                    The system is in Non Real Time processing Mode
+
+     [EMRTBADPTYPE]
+                    The Source process is not a RT-process
+
+     [EMRTBADPTYPE]
+                    The Destination process is not a RT-process
+
+     [EBADDEST]   The Destination process is does not exist
+
+     [ETRYAGAIN]  The Destination process message queue is full
+
+     [EMRTNOMQENT]
+                    The system message queue entry free pool is empty
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTUPRQST(2)             Minix Programmer's Manual              MRTUPRQST(2)
+
+
+SEE ALLLSO
+     mrtrqst(2)...  mrtarqst(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            2
+
+
+
+MRTWAKEUP(2)             Minix Programmer's Manual              MRTWAKEUP(2)
+
+
+NAME
+     mrtwakeup - Wakes up a blocked (MRTSLEEP flag set) process
+
+SYNOPSIS
+     #include <unistd...h>
+
+     int mrtWakeup(mrtpidt mrtpid);
+
+ARGUMENTS
+
+     mrtpid
+          The RT-PID of the RT-process to unblock.
+
+DESCRIPTION
+     mrtwakeup Wakes up a blocked (MRTSLEEP flag set) process
+
+     It must be executed by a RT-process.
+
+RETURN VALLLUE
+     Upon successful completion, a value of 0 (OK) is returned.  Otherwise,  a
+     negative value is returned to indicate an error.
+
+ERRORS
+     mrtwakeup will fail if one or more of the following are true:
+
+     [EMRTNORTMODE]
+                    The system is in Non Real Time processing Mode
+
+     [EMRTBADPROC]
+                    The process PID does not much with the process number  use
+                    by the kernel
+
+     [EMRTBADPTYPE]
+                    The Destination process is not a RT-process
+
+SEE ALLLSO
+     mrtsleep(2)...
+
+AUTHOR
+     Pablo A. Pessolani(ppessolani@hotmail.com)
+
+DIAGNOSTICS
+     No diagnostics
+
+NOTES
+     Use at your own risk.
+
+
+
+
+
+
+5BSD                            November 01, 2005                            1
+
+
+
+MRTWAKEUP(2)             Minix Programmer's Manual              MRTWAKEUP(2)
+
+
+BUGS
+     A lot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5BSD                            November 01, 2005                            2
+

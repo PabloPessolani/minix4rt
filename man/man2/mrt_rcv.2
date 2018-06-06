@@ -1,0 +1,63 @@
+.\"	@(#)mrt_rcv.2	- Pablo Pessolani - 01/11/05
+.\"
+.TH MRT_RCV 2 "November 01, 2005"
+.UC 5
+.SH NAME
+mrt_rcv \- Gets a message from the RT-process MQ
+.SH SYNOPSIS
+.nf
+.ft B
+#include <unistd.h>
+
+int mrt_rcv(mrtpid_t \fImrtpid\fP, \fImrt_msg_t \fI*m_ptr\fP,
+		 \fIm_hdr_t \fI*hdr_ptr\fP, lcounter_t \fItimeout\fP);
+.ft R
+.fi
+.SH ARGUMENTS
+.TP
+.I \mrtpid
+The RT-PID of the message sender from which the caller wants to receive a message. A special value of MRT_ANYPROC can be specified to receive a message from any source. 
+.TP
+.I \m_ptr
+The caller's buffer for the message payload. 
+.TP
+.I \\hdr_ptr
+The caller’s buffer for the message header.
+.TP
+.I \timeout
+The number of RT-ticks for waiting to receive a message. 
+A MRT_NOWAIT value can be specified to return with o without receiving the message. If the message has been received, the function return code is OK else returns E_TRY_AGAIN.
+A MRT_FOREVER value can be specified to waits until the message is receive.
+.SH DESCRIPTION
+.B mrt_rcv
+Gets a message from the RT-process MQ
+.PP
+It must be executed by a RT-process.
+.SH "RETURN VALUE
+Upon successful completion, a value of 0 (OK) is returned.  Otherwise,
+a negative value is returned to indicate an error.
+.SH ERRORS
+.B mrt_rcv
+will fail if one or more of the following are true:
+.TP 15
+[E_MRT_NORTMODE]
+The system is in Non Real Time processing Mode
+.TP 15
+[E_MRT_BADPTYPE]
+The Source process is not a RT-process
+[E_TRY_AGAIN]
+The process has specified a MRT_NOWAIT timeout and the MQ is empty or there are not any message from the specified source.
+[MRT_NOVTIMER]
+The process has specified a timeout to wait for a message but there are not any Virtual Timer to allocate.
+.SH "SEE ALSO"
+.BR mrt_rqst(2).
+.BR mrt_rply(2).
+.SH AUTHOR
+Pablo A. Pessolani(ppessolani@hotmail.com)
+.SH DIAGNOSTICS
+No diagnostics
+.SH NOTES
+Use at your own risk.
+.SH BUGS
+A lot.
+  

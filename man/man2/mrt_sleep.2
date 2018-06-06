@@ -1,0 +1,49 @@
+.\"	@(#)mrt_sleep.2	- Pablo Pessolani - 01/11/05
+.\"
+.TH MRT_SLEEP 2 "November 01, 2005"
+.UC 5
+.SH NAME
+mrt_sleep \- Blocks a process for a specified time.
+.SH SYNOPSIS
+.nf
+.ft B
+#include <unistd.h>
+
+int mrt_sleep(lcounter_t \fItime\fP);
+.ft R
+.fi
+.SH ARGUMENTS
+.TP
+.I \time
+The process is blocked for a specified time (in RT-ticks).
+A MRT_FOREVER value can be specified for the time to wait until the process will be unblocked by other process using the mrt_wakeup System Call
+.SH DESCRIPTION
+.B mrt_sleep
+Blocks a process for a specified time.
+.PP
+It must be executed by a RT-process.
+.SH "RETURN VALUE
+Upon successful completion, a value of 0 (OK) is returned.  Otherwise,
+a negative value is returned to indicate an error.
+.SH ERRORS
+.B mrt_sleep
+will fail if one or more of the following are true:
+.TP 15
+[E_MRT_NORTMODE]
+The system is in Non Real Time processing Mode
+.TP 15
+[E_MRT_BADPER]
+The process has specified an invalid time argument.
+[MRT_NOVTIMER]
+The process has specified a time to wait but there are not any Virtual Timer to allocate.
+.SH "SEE ALSO"
+.BR mrt_wakeup(2).
+.SH AUTHOR
+Pablo A. Pessolani(ppessolani@hotmail.com)
+.SH DIAGNOSTICS
+No diagnostics
+.SH NOTES
+Use at your own risk.
+.SH BUGS
+A lot.
+  
